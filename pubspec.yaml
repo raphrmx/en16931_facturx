@@ -17,7 +17,7 @@ environment:
   sdk: ^3.3.0
 
 dependencies:
-  archive: ^3.6.1
+  archive: ^4.3.0
   decimal: ^3.2.6
   en16931: ^0.1.0
   en16931_cii: ^0.1.0
