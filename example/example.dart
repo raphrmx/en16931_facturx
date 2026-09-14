@@ -60,15 +60,18 @@ void main() {
 
   // What a receiver does with it.
   final received = readFacturxInvoice(document)!;
-  print('  read back ${received.number} at '
-      '${facturxProfileOf(received)!.name}, '
-      '${received.totals.amountDueForPayment} ${received.currency} due');
+  print(
+    '  read back ${received.number} at '
+    '${facturxProfileOf(received)!.name}, '
+    '${received.totals.amountDueForPayment} ${received.currency} due',
+  );
 }
 
 /// A one page PDF, so the example runs without a file beside it.
 Uint8List _aPdf() {
   const page = 'BT /F1 24 Tf 72 760 Td (Facture 2026-0042) Tj ET';
-  const pageDictionary = '<< /Type /Page /Parent 2 0 R '
+  const pageDictionary =
+      '<< /Type /Page /Parent 2 0 R '
       '/MediaBox [0 0 595 842] /Contents 4 0 R '
       '/Resources << /Font << /F1 5 0 R >> >> >>';
   final objects = <String>[

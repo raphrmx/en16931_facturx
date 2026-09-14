@@ -18,24 +18,24 @@ Decimal _d(String value) => Decimal.parse(value);
 
 /// A full invoice, claimed at [profile].
 Invoice _invoice(FacturxProfile profile) => Invoice.fromLines(
-      number: '2026-0042',
-      issueDate: DateTime(2026, 9, 14),
-      dueDate: DateTime(2026, 10, 14),
-      specificationIdentifier: profile.specificationIdentifier,
-      buyerReference: 'CMD-778',
-      seller: _seller,
-      buyer: _buyer,
-      lines: [
-        InvoiceLine.of(
-          id: '1',
-          item: const Item(name: 'Conseil'),
-          quantity: 8,
-          unitPrice: 150.00,
-          vatRate: 20,
-          unit: UnitCode.hour,
-        ),
-      ],
-    );
+  number: '2026-0042',
+  issueDate: DateTime(2026, 9, 14),
+  dueDate: DateTime(2026, 10, 14),
+  specificationIdentifier: profile.specificationIdentifier,
+  buyerReference: 'CMD-778',
+  seller: _seller,
+  buyer: _buyer,
+  lines: [
+    InvoiceLine.of(
+      id: '1',
+      item: const Item(name: 'Conseil'),
+      quantity: 8,
+      unitPrice: 150.00,
+      vatRate: 20,
+      unit: UnitCode.hour,
+    ),
+  ],
+);
 
 void main() {
   group('a profile decides which rules run', () {
@@ -81,8 +81,10 @@ void main() {
       // Naming the level does not excuse the missing identifier: every level
       // asks for BT-24, MINIMUM included.
       expect(
-        validateFacturx(invoice, profile: FacturxProfile.minimum)
-            .map((violation) => violation.rule.id),
+        validateFacturx(
+          invoice,
+          profile: FacturxProfile.minimum,
+        ).map((violation) => violation.rule.id),
         contains('BR-01'),
       );
     });
@@ -115,8 +117,10 @@ void main() {
     });
 
     test('and is refused the moment it claims to be more', () {
-      final breaches = validateFacturx(minimum, profile: FacturxProfile.basic)
-          .map((violation) => violation.rule.id);
+      final breaches = validateFacturx(
+        minimum,
+        profile: FacturxProfile.basic,
+      ).map((violation) => violation.rule.id);
       expect(breaches, contains('BR-16'));
     });
   });
@@ -163,8 +167,9 @@ void main() {
     }
 
     test('the EN 16931 level refuses the cent', () {
-      final breaches = validateFacturx(drifting(FacturxProfile.en16931))
-          .map((violation) => violation.rule.id);
+      final breaches = validateFacturx(
+        drifting(FacturxProfile.en16931),
+      ).map((violation) => violation.rule.id);
       expect(breaches, contains('BR-CO-13'));
     });
 
@@ -209,9 +214,9 @@ void main() {
           totalVat: _d('242.00'),
         ),
       );
-      final breaches = validateFacturx(invoice)
-          .map((violation) => violation.rule.id)
-          .toList();
+      final breaches = validateFacturx(
+        invoice,
+      ).map((violation) => violation.rule.id).toList();
       expect(breaches, contains('BR-FXEXT-CO-13'));
       expect(breaches, contains('BR-FXEXT-S-08ini'));
     });

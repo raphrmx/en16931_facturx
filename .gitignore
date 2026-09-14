@@ -15,3 +15,7 @@ pubspec.lock
 # The Factur-X rule artefacts are fetched, never redistributed.
 # `dart run tool/generate_catalogue.dart --fetch` pulls them in.
 artefacts/
+
+# The Factur-X example documents are fetched, never redistributed.
+# `dart run tool/fetch_examples.dart` pulls them in.
+examples_from_facturx/

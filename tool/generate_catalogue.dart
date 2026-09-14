@@ -19,9 +19,20 @@ import 'dart:io';
 
 import 'package:xml/xml.dart';
 
+/// The release the artefacts are read from.
+///
+/// A tag rather than a branch, so that generating the catalogue twice gives
+/// the same catalogue twice. Factur-X is revised once or twice a year, and
+/// reading from a moving branch leaves the package saying which rules each
+/// level asserts without being able to say against what.
+///
+/// Raising this is a deliberate act: bump it, regenerate, and read what the
+/// diff says before committing it.
+const String artefactRelease = 'core-2.26.0';
+
 const String _base =
-    'https://raw.githubusercontent.com/ZUGFeRD/mustangproject/master/'
-    'validator/src/main/resources/schematron/ZF_250';
+    'https://raw.githubusercontent.com/ZUGFeRD/mustangproject/'
+    '$artefactRelease/validator/src/main/resources/schematron/ZF_250';
 
 /// The five levels, from the thinnest to the widest, and what each is called
 /// in the artefacts.
@@ -105,8 +116,9 @@ Future<void> main(List<String> arguments) async {
 
   final catalogue = extended.values.toList()
     ..sort((a, b) => a.id.compareTo(b.id));
-  File(_output)
-      .writeAsStringSync(_emit(core, syntax, catalogue, identifiers, version));
+  File(
+    _output,
+  ).writeAsStringSync(_emit(core, syntax, catalogue, identifiers, version));
 
   // The emitted lists run past the column the formatter wraps at, so what is
   // written and what is committed would differ by a reflow. Formatting here
@@ -185,8 +197,9 @@ Iterable<_Rule> _read(String source) sync* {
   for (final assertion in document.findAllElements('assert')) {
     final id = assertion.getAttribute('id');
     if (id == null || !seen.add(id)) continue;
-    final severity =
-        assertion.getAttribute('flag') == 'warning' ? 'warning' : 'fatal';
+    final severity = assertion.getAttribute('flag') == 'warning'
+        ? 'warning'
+        : 'fatal';
     yield _Rule(id, severity, _terms(assertion.innerText));
   }
 }
@@ -194,8 +207,9 @@ Iterable<_Rule> _read(String source) sync* {
 /// The business terms a rule bears on, read out of the message.
 List<String> _terms(String message) {
   final found = <String>[];
-  for (final match
-      in RegExp(r'\b(?:BT|BG)-\d+(?:-\d+)?\b').allMatches(message)) {
+  for (final match in RegExp(
+    r'\b(?:BT|BG)-\d+(?:-\d+)?\b',
+  ).allMatches(message)) {
     final term = match.group(0)!;
     if (!found.contains(term)) found.add(term);
   }
@@ -210,8 +224,9 @@ List<String> _terms(String message) {
 /// so a reader has to accept both.
 List<String> _identifiers(File file) {
   final found = <String>{};
-  for (final match in RegExp('urn:(?:factur-x.eu|zugferd.de|cen.eu)[^"<]*')
-      .allMatches(file.readAsStringSync())) {
+  for (final match in RegExp(
+    'urn:(?:factur-x.eu|zugferd.de|cen.eu)[^"<]*',
+  ).allMatches(file.readAsStringSync())) {
     final value = match.group(0)!;
     if (value.contains('factur-x.eu') ||
         value.contains('zugferd.de') ||

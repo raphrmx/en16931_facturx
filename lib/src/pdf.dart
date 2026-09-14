@@ -201,12 +201,13 @@ String? pdfaConformance(Uint8List pdf) {
 
 /// The PDF/A part and level [text] claims, written as one string.
 String? _claim(String text) {
-  final part = RegExp(r'pdfaid:part\s*=\s*"(\d+)"').firstMatch(text) ??
+  final part =
+      RegExp(r'pdfaid:part\s*=\s*"(\d+)"').firstMatch(text) ??
       RegExp(r'<pdfaid:part>\s*(\d+)\s*<').firstMatch(text);
   if (part == null) return null;
   final level =
       RegExp(r'pdfaid:conformance\s*=\s*"([A-Za-z])"').firstMatch(text) ??
-          RegExp(r'<pdfaid:conformance>\s*([A-Za-z])\s*<').firstMatch(text);
+      RegExp(r'<pdfaid:conformance>\s*([A-Za-z])\s*<').firstMatch(text);
   return '${part.group(1)}${level?.group(1)?.toUpperCase() ?? ''}';
 }
 
@@ -240,8 +241,9 @@ Map<int, _Object> _objects(Uint8List pdf) {
     if (end == -1) continue;
     final body = text.substring(match.end, end);
     final streamAt = body.indexOf('stream');
-    final dictionary =
-        streamAt == -1 ? body.trim() : body.substring(0, streamAt).trim();
+    final dictionary = streamAt == -1
+        ? body.trim()
+        : body.substring(0, streamAt).trim();
     Uint8List? stream;
     if (streamAt != -1) {
       var from = match.end + streamAt + 'stream'.length;
@@ -262,8 +264,10 @@ int _trimEol(Uint8List pdf, int to) {
   return end;
 }
 
-int _highestObject(Map<int, _Object> objects) => objects.keys
-    .fold(0, (highest, number) => number > highest ? number : highest);
+int _highestObject(Map<int, _Object> objects) => objects.keys.fold(
+  0,
+  (highest, number) => number > highest ? number : highest,
+);
 
 /// The object number the trailer points at as the catalogue.
 int? _rootReference(Uint8List pdf) {
@@ -285,8 +289,9 @@ String? _byFilespec(Map<int, _Object> objects) {
     final dictionary = object.dictionary;
     if (!dictionary.contains('/EF')) continue;
     if (!_namesTheInvoice(dictionary)) continue;
-    final embedded =
-        RegExp(r'/EF\s*<<[^>]*?/U?F\s+(\d+)\s+\d+\s+R').firstMatch(dictionary);
+    final embedded = RegExp(
+      r'/EF\s*<<[^>]*?/U?F\s+(\d+)\s+\d+\s+R',
+    ).firstMatch(dictionary);
     if (embedded == null) continue;
     final target = objects[int.parse(embedded.group(1)!)];
     final content = target == null ? null : _content(target);
@@ -355,7 +360,8 @@ String _extendCatalogue(String dictionary, int spec, int metadata) {
       'something to guess at, so nothing was written.',
     );
   }
-  final added = ' /AF [$spec 0 R] /Metadata $metadata 0 R '
+  final added =
+      ' /AF [$spec 0 R] /Metadata $metadata 0 R '
       '/Names << /EmbeddedFiles << /Names [(${_escape(facturxFilename)}) '
       '$spec 0 R] >> >>';
   return dictionary.replaceRange(opening + 2, opening + 2, added);
@@ -371,8 +377,8 @@ String _xref(Map<int, int> offsets, int size) {
   var index = 0;
   while (index < numbers.length) {
     var last = index;
-    while (
-        last + 1 < numbers.length && numbers[last + 1] == numbers[last] + 1) {
+    while (last + 1 < numbers.length &&
+        numbers[last + 1] == numbers[last] + 1) {
       last++;
     }
     buffer.writeln('${numbers[index]} ${last - index + 1}');

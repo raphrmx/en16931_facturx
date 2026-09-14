@@ -59,7 +59,9 @@ void main() {
 
     test('do not claim a document that is not Factur-X', () {
       expect(
-          FacturxProfile.of('urn:cen.eu:en16931:2017#compliant#urn:x'), isNull);
+        FacturxProfile.of('urn:cen.eu:en16931:2017#compliant#urn:x'),
+        isNull,
+      );
       expect(FacturxProfile.of(null), isNull);
     });
   });

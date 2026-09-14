@@ -28,8 +28,9 @@ void main() {
   test('EXTENDED takes 51 rules of the standard off', () {
     final en = FacturxProfile.en16931.rules;
     final extended = FacturxProfile.extended.rules;
-    final dropped =
-        en.difference(extended).where((id) => !id.startsWith('BR-FXEXT'));
+    final dropped = en
+        .difference(extended)
+        .where((id) => !id.startsWith('BR-FXEXT'));
     expect(dropped, hasLength(51));
   });
 }

@@ -4,6 +4,11 @@
   travels through a PDP, over Peppol, or as an attachment to an email.
 - The licence badge and the licence section point at the licence page on
   pub.dev. The README carries no link off to a code host any more.
+- The example documents Factur-X publishes, one at each level and one hybrid
+  PDF, are checked by the test suite. Run `dart run tool/fetch_examples.dart`
+  to pull them in.
+- The catalogue is generated from a pinned release of the artefacts,
+  `core-2.26.0`, rather than from whatever the mirror branch held that day.
 
 ## 0.1.0
 

@@ -14,15 +14,15 @@ topics:
   - vat
 
 environment:
-  sdk: ^3.3.0
+  sdk: ^3.11.0
 
 dependencies:
   archive: ^4.3.0
   decimal: ^3.2.6
   en16931: ^0.1.0
-  en16931_cii: ^0.1.0
+  en16931_cii: ^0.1.2
 
 dev_dependencies:
   lint: ^2.4.0
   test: ^1.25.7
-  xml: ^6.5.0
+  xml: ^7.0.0

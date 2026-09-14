@@ -11,7 +11,8 @@ import 'package:test/test.dart';
 /// what the attachment is added to is in front of you, offsets included.
 Uint8List minimalPdf() {
   const page = 'BT /F1 24 Tf 72 760 Td (Facture 2026-0042) Tj ET';
-  const pageDictionary = '<< /Type /Page /Parent 2 0 R '
+  const pageDictionary =
+      '<< /Type /Page /Parent 2 0 R '
       '/MediaBox [0 0 595 842] /Contents 4 0 R '
       '/Resources << /Font << /F1 5 0 R >> >> >>';
   final objects = <String>[
@@ -43,16 +44,17 @@ Uint8List minimalPdf() {
 
 /// The metadata a PDF/A-3B document carries to say what it is.
 String pdfaClaim() => [
-      '<?xpacket begin="" id="W5M0MpCehiHzreSzNTczkc9d"?>',
-      '<x:xmpmeta xmlns:x="adobe:ns:meta/">',
-      '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">',
-      '<rdf:Description rdf:about=""',
-      ' xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/"',
-      ' pdfaid:part="3" pdfaid:conformance="B"/>',
-      '</rdf:RDF></x:xmpmeta>',
-    ].join();
+  '<?xpacket begin="" id="W5M0MpCehiHzreSzNTczkc9d"?>',
+  '<x:xmpmeta xmlns:x="adobe:ns:meta/">',
+  '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">',
+  '<rdf:Description rdf:about=""',
+  ' xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/"',
+  ' pdfaid:part="3" pdfaid:conformance="B"/>',
+  '</rdf:RDF></x:xmpmeta>',
+].join();
 
-const String _xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+const String _xml =
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
     '<rsm:CrossIndustryInvoice '
     'xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100">'
     '<rsm:ExchangedDocument><ram:ID>2026-0042</ram:ID>'
@@ -67,10 +69,7 @@ void main() {
 
     test('something that is not a PDF is refused', () {
       final bytes = Uint8List.fromList(utf8.encode('not a pdf at all'));
-      expect(
-        () => readFacturxXml(bytes),
-        throwsA(isA<FacturxPdfException>()),
-      );
+      expect(() => readFacturxXml(bytes), throwsA(isA<FacturxPdfException>()));
       expect(isFacturxPdf(bytes), isFalse);
     });
   });
@@ -189,8 +188,10 @@ void main() {
         ...compressed,
         ...latin1.encode('\nendstream\nendobj\n'),
       ]);
-      expect(latin1.decode(bytes, allowInvalid: true),
-          isNot(contains('pdfaid:part')));
+      expect(
+        latin1.decode(bytes, allowInvalid: true),
+        isNot(contains('pdfaid:part')),
+      );
       expect(pdfaConformance(bytes), '3B');
     });
     test('a document that claims 3B is read back as 3B', () {

@@ -80,3 +80,29 @@ jobs:
 
       - name: The catalogue is current
         run: git diff --exit-code -- lib/src/catalogue.g.dart
+
+  # One document at each of the five levels, and one real hybrid PDF. Checking
+  # our own invoices proves the levels do what this package thinks they do;
+  # checking these proves they do what Factur-X thinks they do. They are
+  # fetched here and never committed.
+  examples:
+    runs-on: ubuntu-latest
+    name: published examples
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Fetch the published examples
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: dart run tool/fetch_examples.dart
+
+      - name: Check them
+        run: dart test test/facturx_examples_test.dart
