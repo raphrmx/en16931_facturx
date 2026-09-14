@@ -1,0 +1,4 @@
+# Golden files hold the exact bytes a syntax package is expected to write, and
+# CI diffs them. Without this, a Windows checkout stores CRLF and no diff is
+# ever clean.
+* text=auto eol=lf

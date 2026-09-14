@@ -1,0 +1,82 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  # Catches SDK drift on a package that can go months without a commit: a new
+  # formatter default or a new lint shows up here rather than on the next release.
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk: [stable, beta]
+
+    # The beta leg is an early warning, not a gate.
+    continue-on-error: ${{ matrix.sdk == 'beta' }}
+
+    name: ${{ matrix.sdk }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.sdk }}
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      # Language features are gated by the pubspec lower bound, so this also
+      # guards the declared Dart floor.
+      - name: Analyze
+        run: dart analyze --fatal-infos
+
+      - name: Run tests
+        run: dart test
+
+      # The example is part of the package and compiles against it, so a model
+      # change that breaks it is caught here rather than by a reader.
+      - name: Run the example
+        run: dart run example/example.dart
+
+      # Fails on a packaging regression, such as a CHANGELOG that no longer
+      # mentions the version in pubspec.yaml.
+      - name: Validate the package
+        run: dart pub publish --dry-run
+
+  # Factur-X is revised once or twice a year. This pulls the artefacts and fails
+  # when the catalogue no longer matches, which is the only warning we get
+  # that the specification moved. It does not run on a push, so the build never
+  # depends on the network, and the artefacts are read and thrown away.
+  artefacts:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    name: artefacts
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Read the published artefacts
+        run: dart run tool/generate_catalogue.dart --fetch
+
+      - name: The catalogue is current
+        run: git diff --exit-code -- lib/src/catalogue.g.dart
