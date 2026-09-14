@@ -2,10 +2,10 @@
 
 # EN 16931 Factur-X
 
-[![Build](https://img.shields.io/github/actions/workflow/status/raphrmx/en16931_facturx/ci.yml?branch=main&label=build)](https://github.com/raphrmx/en16931_facturx/actions/workflows/ci.yml)
+![Build](https://img.shields.io/github/actions/workflow/status/raphrmx/en16931_facturx/ci.yml?branch=main&label=build)
 [![Pub Version](https://img.shields.io/pub/v/en16931_facturx?color=blue)](https://pub.dev/packages/en16931_facturx)
 [![Maintainer](https://img.shields.io/badge/Maintainer-Raphael_Vrient-purple)](https://pub.dev/publishers/comapps.be/packages)
-[![License](https://img.shields.io/badge/Licence-MIT-blue)](/LICENSE)
+[![License](https://img.shields.io/badge/Licence-MIT-blue)](https://pub.dev/packages/en16931_facturx/license)
 ![Maintenance](https://img.shields.io/badge/Maintained-yes-success)
 
 Factur-X 1.09.2: the five levels a French invoice is issued at, the rules each
@@ -18,8 +18,8 @@ invoice out of it.
 
 ```yaml
 dependencies:
-  en16931: ^0.1.1
-  en16931_facturx: ^0.1.0
+  en16931: ^0.1.2
+  en16931_facturx: ^0.1.1
 ```
 
 ## Make the document
@@ -126,11 +126,19 @@ is complete by construction. A test fails when a rule has no answer.
 ## What it does not do
 
 It does not draw the PDF: that is your application's business, and this takes
-the bytes it produced. It does not decide what an invoice has to contain
-either, which is [en16931](https://pub.dev/packages/en16931)'s, and the XML is
-written by [en16931_cii](https://pub.dev/packages/en16931_cii).
+the bytes it produced. What an invoice has to contain is
+[en16931](https://pub.dev/packages/en16931)'s business, and the XML is written
+by [en16931_cii](https://pub.dev/packages/en16931_cii), which comes with this
+package.
+
+Delivery is a separate choice, and an easy one here: a Factur-X document is a
+PDF, so it goes through a PDP, over Peppol, or as an attachment to an email,
+and reads the same either way.
 
 ## License
 
-MIT. The artefacts it is generated from are not redistributed: what is taken
-from them is which rules each level asserts and which identifiers claim it.
+Released under the [MIT licence](https://pub.dev/packages/en16931_facturx/license).
+
+The profile catalogue is generated from the Schematron files Factur-X
+publishes. None of their content is redistributed: what is taken from them is
+which rules each level asserts and which identifiers claim it.

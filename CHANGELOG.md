@@ -1,3 +1,10 @@
+## 0.1.1
+
+- The README says what a Factur-X document is good for: it is a PDF, so it
+  travels through a PDP, over Peppol, or as an attachment to an email.
+- The licence badge and the licence section point at the licence page on
+  pub.dev. The README carries no link off to a code host any more.
+
 ## 0.1.0
 
 First release.
