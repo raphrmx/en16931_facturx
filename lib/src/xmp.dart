@@ -60,3 +60,31 @@ String _property(String name, String description) =>
                   <pdfaProperty:category>external</pdfaProperty:category>
                   <pdfaProperty:description>$description</pdfaProperty:description>
                 </rdf:li>''';
+
+/// [existing] metadata with the Factur-X properties added to it.
+///
+/// A document that already describes itself keeps every word of it: the
+/// conformance it claims, its title, who wrote it. Only the Factur-X
+/// descriptions are added, just before the RDF closes, which is where a
+/// reader looks for them.
+///
+/// Falls back to the metadata on its own when [existing] is not the RDF a
+/// reader expects. Writing something unreadable over something readable would
+/// be the worse of the two failures.
+String mergeFacturxXmp(String existing, FacturxProfile profile) {
+  const closing = '</rdf:RDF>';
+  final at = existing.lastIndexOf(closing);
+  if (at == -1) return facturxXmp(profile);
+
+  final additions = _descriptions(facturxXmp(profile));
+  if (additions.isEmpty) return existing;
+  return existing.replaceRange(at, at, '$additions\n  ');
+}
+
+/// The two descriptions the Factur-X metadata is made of, lifted out of it.
+String _descriptions(String xmp) {
+  final from = xmp.indexOf('<rdf:Description');
+  final to = xmp.lastIndexOf('</rdf:Description>');
+  if (from == -1 || to == -1 || to < from) return '';
+  return xmp.substring(from, to + '</rdf:Description>'.length);
+}

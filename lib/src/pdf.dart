@@ -143,7 +143,13 @@ Uint8List attachFacturxXml(
     ),
   );
 
-  final metadata = utf8.encode(facturxXmp(profile));
+  // A document that already describes itself keeps what it said: PDF/A needs
+  // metadata in the catalogue, and throwing it away would take the
+  // conformance claim with it. What is added goes beside it.
+  final existing = _metadataOf(catalogue.dictionary, objects);
+  final metadata = utf8.encode(
+    existing == null ? facturxXmp(profile) : mergeFacturxXmp(existing, profile),
+  );
   write(metadataObject, [
     ...utf8.encode(
       '<< /Type /Metadata /Subtype /XML /Length ${metadata.length} '
@@ -348,6 +354,12 @@ String? _content(_Object object) {
 /// after the opening `<<` rather than written over. An existing `/AF` or
 /// `/Names` would be a document that already carries attachments, which is
 /// not something to guess at, so that is refused.
+///
+/// The metadata is the exception. A dictionary holds a key once, so a
+/// document that already points at its own metadata has that pointer moved to
+/// the merged one rather than a second `/Metadata` written beside it. Every
+/// PDF/A file points at its own, so getting this wrong would break the very
+/// documents Factur-X is made of.
 String _extendCatalogue(String dictionary, int spec, int metadata) {
   final opening = dictionary.indexOf('<<');
   if (opening == -1) {
@@ -360,11 +372,35 @@ String _extendCatalogue(String dictionary, int spec, int metadata) {
       'something to guess at, so nothing was written.',
     );
   }
-  final added =
-      ' /AF [$spec 0 R] /Metadata $metadata 0 R '
-      '/Names << /EmbeddedFiles << /Names [(${_escape(facturxFilename)}) '
-      '$spec 0 R] >> >>';
-  return dictionary.replaceRange(opening + 2, opening + 2, added);
+
+  final pointer = _metadataPointer.firstMatch(dictionary);
+  final moved = pointer == null
+      ? dictionary
+      : dictionary.replaceRange(
+          pointer.start,
+          pointer.end,
+          '/Metadata $metadata 0 R',
+        );
+  final added = StringBuffer(' /AF [$spec 0 R]')
+    ..write(pointer == null ? ' /Metadata $metadata 0 R' : '')
+    ..write(' /Names << /EmbeddedFiles << /Names ')
+    ..write('[(${_escape(facturxFilename)}) $spec 0 R] >> >>');
+  return moved.replaceRange(opening + 2, opening + 2, added.toString());
+}
+
+/// Where a catalogue says its own metadata is.
+final RegExp _metadataPointer = RegExp(r'/Metadata\s+\d+\s+\d+\s+R');
+
+/// The metadata a catalogue already carries, as text, or null when it carries
+/// none or carries something that is not readable text.
+String? _metadataOf(String dictionary, Map<int, _Object> objects) {
+  final pointer = _metadataPointer.firstMatch(dictionary);
+  if (pointer == null) return null;
+  final number = int.tryParse(
+    RegExp(r'\d+').firstMatch(pointer.group(0)!)!.group(0)!,
+  );
+  final object = number == null ? null : objects[number];
+  return object == null ? null : _content(object);
 }
 
 /// The cross reference section for the objects this update wrote.

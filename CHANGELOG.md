@@ -1,3 +1,16 @@
+## 0.1.2
+
+- The metadata of a document that already carries some is kept, and the
+  Factur-X properties are added beside it. Until now a second `/Metadata` was
+  written into the catalogue next to the first, and a PDF dictionary holds a
+  key once: the result was malformed. Every PDF/A file points at its own
+  metadata, so this broke the very documents Factur-X is made of, and took the
+  conformance claim with it.
+- What the Mustang validator says about a document this package writes is now
+  known rather than assumed: it reads the attachment out and finds the invoice
+  inside valid under EN 16931. The README says so, and says what is still not
+  claimed.
+
 ## 0.1.1
 
 - The README says what a Factur-X document is good for: it is a PDF, so it

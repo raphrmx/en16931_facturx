@@ -19,7 +19,7 @@ invoice out of it.
 ```yaml
 dependencies:
   en16931: ^0.1.2
-  en16931_facturx: ^0.1.1
+  en16931_facturx: ^0.1.2
 ```
 
 ## Make the document
@@ -102,14 +102,27 @@ at EXTENDED.
 
 **Attaching does not make a file PDF/A-3.** A Factur-X invoice has to be one,
 and a PDF becomes one by having its fonts embedded and its colours profiled,
-which cannot be added afterwards. Give `facturxPdf` a PDF/A-3 and the result
-is one; give it an ordinary PDF and the result is an ordinary PDF with a
-correct attachment. `pdfaConformance` reads back what the file claims.
+which cannot be added afterwards. Give `facturxPdf` an ordinary PDF and the
+result is an ordinary PDF with a correct attachment: the XML is where a
+reader looks for it, and the file is still not PDF/A-3. Start from a PDF/A-3
+and what the document claims about itself is carried through.
+`pdfaConformance` reads that claim back.
 
 **The PDF is extended, never rewritten.** The bytes you pass are kept whole
 and the new objects are appended after them, so nothing the document already
-carried is lost. A document whose catalogue is held inside an object stream
-cannot be extended this way, and that is refused rather than half written.
+carried is lost. Its own metadata is kept too, and the Factur-X properties
+are added beside what it already said: a file that claims PDF/A-3B still
+claims it afterwards. A document whose catalogue is held inside an object
+stream cannot be extended this way, and that is refused rather than half
+written.
+
+**What has been checked against somebody else's validator.** The Mustang
+validator, the reference implementation, reads the attachment out of a
+document this package writes and finds the invoice inside valid under
+EN 16931. It reports the file as not PDF/A-3 when the PDF it was given was
+not one, which is the paragraph above and not a surprise. Whether a PDF/A-3
+in gives a PDF/A-3 out is not something this package can claim for you: run
+your own file through a validator.
 
 **A document claiming ZUGFeRD is read too.** Germany writes the same file
 under its own identifiers, and `FacturxProfile.of` answers to both.

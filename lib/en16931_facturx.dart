@@ -24,4 +24,4 @@ export 'src/rules.dart'
         facturxRules,
         facturxSubsumed;
 export 'src/validator.dart';
-export 'src/xmp.dart' show facturxNamespace, facturxXmp;
+export 'src/xmp.dart' show facturxNamespace, facturxXmp, mergeFacturxXmp;
