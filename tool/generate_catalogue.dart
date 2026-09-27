@@ -30,8 +30,7 @@ import 'package:xml/xml.dart';
 /// diff says before committing it.
 const String artefactRelease = 'core-2.26.0';
 
-const String _base =
-    'https://raw.githubusercontent.com/ZUGFeRD/mustangproject/'
+const String _base = 'https://raw.githubusercontent.com/ZUGFeRD/mustangproject/'
     '$artefactRelease/validator/src/main/resources/schematron/ZF_250';
 
 /// The five levels, from the thinnest to the widest, and what each is called
@@ -197,9 +196,8 @@ Iterable<_Rule> _read(String source) sync* {
   for (final assertion in document.findAllElements('assert')) {
     final id = assertion.getAttribute('id');
     if (id == null || !seen.add(id)) continue;
-    final severity = assertion.getAttribute('flag') == 'warning'
-        ? 'warning'
-        : 'fatal';
+    final severity =
+        assertion.getAttribute('flag') == 'warning' ? 'warning' : 'fatal';
     yield _Rule(id, severity, _terms(assertion.innerText));
   }
 }

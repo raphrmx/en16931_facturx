@@ -18,24 +18,24 @@ Decimal _d(String value) => Decimal.parse(value);
 
 /// A full invoice, claimed at [profile].
 Invoice _invoice(FacturxProfile profile) => Invoice.fromLines(
-  number: '2026-0042',
-  issueDate: DateTime(2026, 9, 14),
-  dueDate: DateTime(2026, 10, 14),
-  specificationIdentifier: profile.specificationIdentifier,
-  buyerReference: 'CMD-778',
-  seller: _seller,
-  buyer: _buyer,
-  lines: [
-    InvoiceLine.of(
-      id: '1',
-      item: const Item(name: 'Conseil'),
-      quantity: 8,
-      unitPrice: 150.00,
-      vatRate: 20,
-      unit: UnitCode.hour,
-    ),
-  ],
-);
+      number: '2026-0042',
+      issueDate: DateTime(2026, 9, 14),
+      dueDate: DateTime(2026, 10, 14),
+      specificationIdentifier: profile.specificationIdentifier,
+      buyerReference: 'CMD-778',
+      seller: _seller,
+      buyer: _buyer,
+      lines: [
+        InvoiceLine.of(
+          id: '1',
+          item: const Item(name: 'Conseil'),
+          quantity: 8,
+          unitPrice: 150.00,
+          vatRate: 20,
+          unit: UnitCode.hour,
+        ),
+      ],
+    );
 
 void main() {
   group('a profile decides which rules run', () {

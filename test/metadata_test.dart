@@ -100,13 +100,11 @@ const String _dc = 'http://purl.org/dc/elements/1.1/';
 /// A one page PDF that points at its own metadata, as PDF/A requires.
 Uint8List _pdfWithMetadata() {
   const page = 'BT /F1 24 Tf 72 760 Td (Facture) Tj ET';
-  const pageDictionary =
-      '<< /Type /Page /Parent 2 0 R '
+  const pageDictionary = '<< /Type /Page /Parent 2 0 R '
       '/MediaBox [0 0 595 842] /Contents 4 0 R '
       '/Resources << /Font << /F1 5 0 R >> >> >>';
   final xmp = _xmp();
-  final metadata =
-      '<< /Type /Metadata /Subtype /XML /Length ${xmp.length} >>\n'
+  final metadata = '<< /Type /Metadata /Subtype /XML /Length ${xmp.length} >>\n'
       'stream\n$xmp\nendstream';
   final objects = <String>[
     '<< /Type /Catalog /Pages 2 0 R /Metadata 6 0 R >>',

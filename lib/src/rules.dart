@@ -2,8 +2,8 @@ import 'package:decimal/decimal.dart';
 import 'package:en16931/en16931.dart';
 
 /// Checks one Factur-X rule against an invoice.
-typedef FacturxCheck =
-    Iterable<RuleViolation> Function(Invoice invoice, RuleDescriptor rule);
+typedef FacturxCheck = Iterable<RuleViolation> Function(
+    Invoice invoice, RuleDescriptor rule);
 
 /// One cent, which is what EXTENDED allows per amount that went into a total.
 final Decimal _cent = Decimal.parse('0.01');
@@ -124,7 +124,7 @@ const Map<String, String> facturxMetByConstruction = {
 const Map<String, String> facturxNotMachineCheckable = {
   'BR-FXEXT-04':
       'Whether an item attribute name (BT-160) is one of UNTDED 6313 is a '
-      'recommendation, and the artefacts assert nothing for it.',
+          'recommendation, and the artefacts assert nothing for it.',
 };
 
 /// The rules that are about the document rather than the invoice.
@@ -198,8 +198,7 @@ Iterable<RuleViolation> _co13(Invoice invoice, RuleDescriptor rule) sync* {
   yield* _within(
     rule,
     actual: invoice.totals.totalWithoutVat,
-    expected:
-        _sum(invoice.lines.map((line) => line.netAmount)) -
+    expected: _sum(invoice.lines.map((line) => line.netAmount)) -
         _sum(allowances.map((entry) => entry.amount)) +
         _sum(charges.map((entry) => entry.amount)),
     count: invoice.lines.length + allowances.length + charges.length,
@@ -239,34 +238,34 @@ Iterable<RuleViolation> _s09b(Invoice invoice, RuleDescriptor rule) sync* {
 
 /// The taxable amount of each entry of [category], within a cent per amount.
 FacturxCheck _breakdown(VatCategory category) => (invoice, rule) sync* {
-  for (final (index, entry) in invoice.vatBreakdown.indexed) {
-    if (entry.category != category) continue;
-    final rate = _byRate.contains(category) ? entry.rate : null;
-    final lines = invoice.lines
-        .where((line) => line.vatCategory == category)
-        .where((line) => rate == null || line.vatRate == rate)
-        .toList();
-    final entries = invoice.allowancesAndCharges
-        .where((item) => item.vatCategory == category)
-        .where((item) => rate == null || item.vatRate == rate)
-        .toList();
-    final allowances = entries.where(
-      (e) => e.kind == AllowanceOrCharge.allowance,
-    );
-    final charges = entries.where((e) => e.kind == AllowanceOrCharge.charge);
-    yield* _within(
-      rule,
-      actual: entry.taxableAmount,
-      expected:
-          _sum(lines.map((line) => line.netAmount)) -
-          _sum(allowances.map((item) => item.amount)) +
-          _sum(charges.map((item) => item.amount)),
-      count: lines.length + entries.length,
-      term: 'taxable amount of the breakdown entry (BT-116)',
-      path: 'VAT breakdown $index',
-    );
-  }
-};
+      for (final (index, entry) in invoice.vatBreakdown.indexed) {
+        if (entry.category != category) continue;
+        final rate = _byRate.contains(category) ? entry.rate : null;
+        final lines = invoice.lines
+            .where((line) => line.vatCategory == category)
+            .where((line) => rate == null || line.vatRate == rate)
+            .toList();
+        final entries = invoice.allowancesAndCharges
+            .where((item) => item.vatCategory == category)
+            .where((item) => rate == null || item.vatRate == rate)
+            .toList();
+        final allowances = entries.where(
+          (e) => e.kind == AllowanceOrCharge.allowance,
+        );
+        final charges =
+            entries.where((e) => e.kind == AllowanceOrCharge.charge);
+        yield* _within(
+          rule,
+          actual: entry.taxableAmount,
+          expected: _sum(lines.map((line) => line.netAmount)) -
+              _sum(allowances.map((item) => item.amount)) +
+              _sum(charges.map((item) => item.amount)),
+          count: lines.length + entries.length,
+          term: 'taxable amount of the breakdown entry (BT-116)',
+          path: 'VAT breakdown $index',
+        );
+      }
+    };
 
 // --- Helpers ----------------------------------------------------------------
 
@@ -309,13 +308,14 @@ int _contributors(Invoice invoice, {VatCategory? category}) {
 Iterable<DocumentAllowanceCharge> _entries(
   Invoice invoice,
   AllowanceOrCharge kind,
-) => invoice.allowancesAndCharges.where((entry) => entry.kind == kind);
+) =>
+    invoice.allowancesAndCharges.where((entry) => entry.kind == kind);
 
 /// The rule of the standard, reported under the identifier Factur-X uses.
 FacturxCheck _borrow(String id) => (invoice, rule) {
-  final check = _standard[id];
-  return check == null ? const <RuleViolation>[] : check(invoice, rule);
-};
+      final check = _standard[id];
+      return check == null ? const <RuleViolation>[] : check(invoice, rule);
+    };
 
 Decimal _sum(Iterable<Decimal> amounts) =>
     amounts.fold(Decimal.zero, (total, amount) => total + amount);

@@ -2,8 +2,8 @@ name: en16931_facturx
 description: >-
   The Factur-X profile of the European electronic invoice: its five levels,
   the rules each one asks for, and the hybrid PDF that carries the XML.
-version: 0.1.2
-homepage: https://www.comapps.be
+version: 0.1.4
+homepage: https://comapps.web.app/#en16931_facturx
 repository: https://github.com/raphrmx/en16931_facturx
 issue_tracker: https://github.com/raphrmx/en16931_facturx/issues
 topics:
@@ -14,15 +14,15 @@ topics:
   - vat
 
 environment:
-  sdk: ^3.11.0
+  sdk: ^3.3.0
 
 dependencies:
   archive: ^4.3.0
   decimal: ^3.2.6
-  en16931: ^0.1.0
-  en16931_cii: ^0.1.2
+  en16931: ^0.1.4
+  en16931_cii: ^0.1.5
 
 dev_dependencies:
   lint: ^2.4.0
   test: ^1.25.7
-  xml: ^7.0.0
+  xml: '>=6.5.0 <8.0.0'

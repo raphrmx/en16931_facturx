@@ -14,8 +14,7 @@ const String facturxNamespace =
 /// PDF/A. PDF/A allows no namespace it does not know about unless the file
 /// describes it, so a document carrying the properties without the
 /// description fails validation for the metadata rather than for the invoice.
-String facturxXmp(FacturxProfile profile) =>
-    '''
+String facturxXmp(FacturxProfile profile) => '''
 <?xpacket begin="\u{feff}" id="W5M0MpCehiHzreSzNTczkc9d"?>
 <x:xmpmeta xmlns:x="adobe:ns:meta/">
   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -52,8 +51,7 @@ ${_property('ConformanceLevel', 'The conformance level of the embedded XML')}
 <?xpacket end="w"?>
 ''';
 
-String _property(String name, String description) =>
-    '''
+String _property(String name, String description) => '''
                 <rdf:li rdf:parseType="Resource">
                   <pdfaProperty:name>$name</pdfaProperty:name>
                   <pdfaProperty:valueType>Text</pdfaProperty:valueType>

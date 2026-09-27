@@ -33,12 +33,12 @@ Set<String> get implementedFacturxRules => facturxRules.keys.toSet();
 
 /// Every rule Factur-X states that this package has an answer for.
 Set<String> get accountedFacturxRules => {
-  ...implementedFacturxRules,
-  ...facturxSubsumed.keys,
-  ...facturxMetByConstruction.keys,
-  ...facturxNotMachineCheckable.keys,
-  ...facturxForTheSyntax.keys,
-};
+      ...implementedFacturxRules,
+      ...facturxSubsumed.keys,
+      ...facturxMetByConstruction.keys,
+      ...facturxNotMachineCheckable.keys,
+      ...facturxForTheSyntax.keys,
+    };
 
 /// What [invoice] breaks at its profile.
 ///
