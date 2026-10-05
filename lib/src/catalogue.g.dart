@@ -15,13 +15,21 @@ const String facturxVersion = '1.09.2';
 /// ZUGFeRD one Germany writes for the same document. The first
 /// of each pair is the one this package writes.
 const Map<String, List<String>> facturxProfileIdentifiers = {
-  'minimum': ['urn:factur-x.eu:1p0:minimum', 'urn:zugferd.de:2p0:minimum'],
-  'basicWl': ['urn:factur-x.eu:1p0:basicwl', 'urn:zugferd.de:2p0:basicwl'],
+  'minimum': [
+    'urn:factur-x.eu:1p0:minimum',
+    'urn:zugferd.de:2p0:minimum',
+  ],
+  'basicWl': [
+    'urn:factur-x.eu:1p0:basicwl',
+    'urn:zugferd.de:2p0:basicwl',
+  ],
   'basic': [
     'urn:cen.eu:en16931:2017#compliant#urn:factur-x.eu:1p0:basic',
     'urn:cen.eu:en16931:2017#compliant#urn:zugferd.de:2p0:basic',
   ],
-  'en16931': ['urn:cen.eu:en16931:2017'],
+  'en16931': [
+    'urn:cen.eu:en16931:2017',
+  ],
   'extended': [
     'urn:cen.eu:en16931:2017#conformant#urn:factur-x.eu:1p0:extended',
     'urn:cen.eu:en16931:2017#conformant#urn:zugferd.de:2p0:extended',
@@ -2222,7 +2230,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-95',
       'BT-102',
       'BG-23',
-      'BT-118',
+      'BT-118'
     ],
   ),
   RuleDescriptor(
@@ -2244,7 +2252,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-174',
       'BT-175',
-      'BT-176',
+      'BT-176'
     ],
   ),
   RuleDescriptor(
@@ -2260,7 +2268,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-99',
       'BT-151',
       'BT-95',
-      'BT-102',
+      'BT-102'
     ],
   ),
   RuleDescriptor(
@@ -2284,7 +2292,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-175',
       'BT-121',
-      'BT-120',
+      'BT-120'
     ],
   ),
   RuleDescriptor(
@@ -2299,7 +2307,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-95',
       'BT-102',
       'BG-23',
-      'BT-118',
+      'BT-118'
     ],
   ),
   RuleDescriptor(
@@ -2321,7 +2329,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-174',
       'BT-175',
-      'BT-176',
+      'BT-176'
     ],
   ),
   RuleDescriptor(
@@ -2337,7 +2345,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-99',
       'BT-151',
       'BT-95',
-      'BT-102',
+      'BT-102'
     ],
   ),
   RuleDescriptor(
@@ -2361,7 +2369,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-175',
       'BT-121',
-      'BT-120',
+      'BT-120'
     ],
   ),
   RuleDescriptor(
@@ -2376,7 +2384,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-95',
       'BT-102',
       'BG-23',
-      'BT-118',
+      'BT-118'
     ],
   ),
   RuleDescriptor(
@@ -2398,7 +2406,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-174',
       'BT-175',
-      'BT-176',
+      'BT-176'
     ],
   ),
   RuleDescriptor(
@@ -2414,7 +2422,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-99',
       'BT-151',
       'BT-95',
-      'BT-102',
+      'BT-102'
     ],
   ),
   RuleDescriptor(
@@ -2438,7 +2446,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-175',
       'BT-121',
-      'BT-120',
+      'BT-120'
     ],
   ),
   RuleDescriptor(
@@ -2537,7 +2545,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-109',
       'BT-131',
       'BT-92',
-      'BT-99',
+      'BT-99'
     ],
   ),
   RuleDescriptor(
@@ -2558,7 +2566,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-95',
       'BT-102',
       'BG-23',
-      'BT-118',
+      'BT-118'
     ],
   ),
   RuleDescriptor(
@@ -2580,7 +2588,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-174',
       'BT-175',
-      'BT-176',
+      'BT-176'
     ],
   ),
   RuleDescriptor(
@@ -2596,7 +2604,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-99',
       'BT-151',
       'BT-95',
-      'BT-102',
+      'BT-102'
     ],
   ),
   RuleDescriptor(
@@ -2620,7 +2628,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-175',
       'BT-121',
-      'BT-120',
+      'BT-120'
     ],
   ),
   RuleDescriptor(
@@ -2635,7 +2643,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-95',
       'BT-102',
       'BG-23',
-      'BT-118',
+      'BT-118'
     ],
   ),
   RuleDescriptor(
@@ -2657,7 +2665,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-174',
       'BT-175',
-      'BT-176',
+      'BT-176'
     ],
   ),
   RuleDescriptor(
@@ -2673,7 +2681,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-99',
       'BT-151',
       'BT-95',
-      'BT-102',
+      'BT-102'
     ],
   ),
   RuleDescriptor(
@@ -2697,7 +2705,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-175',
       'BT-121',
-      'BT-120',
+      'BT-120'
     ],
   ),
   RuleDescriptor(
@@ -2712,7 +2720,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-95',
       'BT-102',
       'BG-23',
-      'BT-118',
+      'BT-118'
     ],
   ),
   RuleDescriptor(
@@ -2734,7 +2742,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-174',
       'BT-175',
-      'BT-176',
+      'BT-176'
     ],
   ),
   RuleDescriptor(
@@ -2750,7 +2758,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-99',
       'BT-151',
       'BT-95',
-      'BT-102',
+      'BT-102'
     ],
   ),
   RuleDescriptor(
@@ -2774,7 +2782,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-175',
       'BT-121',
-      'BT-120',
+      'BT-120'
     ],
   ),
   RuleDescriptor(
@@ -2789,7 +2797,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-95',
       'BT-102',
       'BG-23',
-      'BT-118',
+      'BT-118'
     ],
   ),
   RuleDescriptor(
@@ -2811,7 +2819,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-174',
       'BT-175',
-      'BT-176',
+      'BT-176'
     ],
   ),
   RuleDescriptor(
@@ -2827,7 +2835,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-99',
       'BT-151',
       'BT-95',
-      'BT-102',
+      'BT-102'
     ],
   ),
   RuleDescriptor(
@@ -2851,7 +2859,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-175',
       'BT-121',
-      'BT-120',
+      'BT-120'
     ],
   ),
   RuleDescriptor(
@@ -2866,7 +2874,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-95',
       'BT-102',
       'BG-23',
-      'BT-118',
+      'BT-118'
     ],
   ),
   RuleDescriptor(
@@ -2883,7 +2891,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-99',
       'BT-151',
       'BT-95',
-      'BT-102',
+      'BT-102'
     ],
   ),
   RuleDescriptor(
@@ -2908,7 +2916,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-175',
       'BT-121',
-      'BT-120',
+      'BT-120'
     ],
   ),
   RuleDescriptor(
@@ -2935,7 +2943,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-174',
       'BT-175',
-      'BT-176',
+      'BT-176'
     ],
   ),
   RuleDescriptor(
@@ -2958,7 +2966,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-173',
       'BT-174',
       'BT-175',
-      'BT-176',
+      'BT-176'
     ],
   ),
   RuleDescriptor(
@@ -2973,7 +2981,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-95',
       'BT-102',
       'BG-23',
-      'BT-118',
+      'BT-118'
     ],
   ),
   RuleDescriptor(
@@ -2989,7 +2997,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-99',
       'BT-151',
       'BT-95',
-      'BT-102',
+      'BT-102'
     ],
   ),
   RuleDescriptor(
@@ -3005,7 +3013,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-99',
       'BT-151',
       'BT-95',
-      'BT-102',
+      'BT-102'
     ],
   ),
   RuleDescriptor(
@@ -3021,7 +3029,7 @@ const List<RuleDescriptor> facturxExtendedCatalogue = [
       'BT-99',
       'BT-151',
       'BT-95',
-      'BT-102',
+      'BT-102'
     ],
   ),
 ];

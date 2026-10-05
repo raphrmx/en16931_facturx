@@ -1,0 +1,17 @@
+name: upstream
+
+# Once a week, the build runs against the newest SDK and against what the
+# authorities have published since. It catches what no commit here causes: a
+# new formatter default or lint, revised rule artefacts, new official
+# examples. GitHub mails the failure. It is a workflow of its own so that a red
+# run here says the world moved, without turning the README's build badge red
+# on pub.dev.
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/ci.yml

@@ -5,11 +5,10 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  # Catches SDK drift on a package that can go months without a commit: a new
-  # formatter default or a new lint shows up here rather than on the next release.
-  schedule:
-    - cron: '0 6 * * 1'
   workflow_dispatch:
+  # The weekly run lives in upstream.yml and calls this workflow, so its
+  # outcome never lands on the build badge the README shows on pub.dev.
+  workflow_call:
 
 jobs:
   test:

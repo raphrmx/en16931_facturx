@@ -1,3 +1,14 @@
+## 0.1.5
+
+- `homepage` and the Live demo badge point at packages.comapps.be, where the
+  demo site moved. The old address redirects there.
+- The rule catalogue is generated again under the Dart 3.3 formatter, which
+  the build compares it against since the floor moved. Only line breaks and
+  trailing commas changed; no rule did.
+- The badge row carries a PayPal donation badge, `funding` points pub.dev
+  at the same donation page, and the README ends on the other packages
+  COMAPPS publishes. Nothing about the library changed.
+
 ## 0.1.4
 
 - The package asks for Dart 3.3 instead of 3.11, so a project that has not
